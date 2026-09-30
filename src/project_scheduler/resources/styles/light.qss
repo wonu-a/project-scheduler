@@ -122,7 +122,7 @@ QLabel#statCaption {
 }
 
 /* Inputs */
-QLineEdit, QSpinBox, QDateEdit {
+QLineEdit, QSpinBox, QDateEdit, QPlainTextEdit {
     background: #ffffff;
     border: 1px solid #cfd6e3;
     border-radius: 7px;
@@ -130,7 +130,7 @@ QLineEdit, QSpinBox, QDateEdit {
     selection-background-color: #4f46e5;
     selection-color: #ffffff;
 }
-QLineEdit:focus, QSpinBox:focus, QDateEdit:focus {
+QLineEdit:focus, QSpinBox:focus, QDateEdit:focus, QPlainTextEdit:focus {
     border-color: #4f46e5;
 }
 QLineEdit#filterEdit {

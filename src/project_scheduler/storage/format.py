@@ -12,10 +12,22 @@ from typing import Any
 
 from ..domain import Project, Task, WorkCalendar
 
-FORMAT_VERSION = 1
+FORMAT_VERSION = 2
+
+
+def migrate_v1_to_v2(document: dict[str, Any]) -> dict[str, Any]:
+    """Version 2 adds a ``notes`` string to every task; old tasks get an empty note."""
+    project = document.get("project")
+    tasks = project.get("tasks") if isinstance(project, dict) else None
+    if isinstance(tasks, list):
+        for task in tasks:
+            if isinstance(task, dict):
+                task.setdefault("notes", "")
+    return document  # anything malformed is rejected by project_from_document
+
 
 # Maps version n to the function converting a version-n document into version n+1.
-MIGRATIONS: dict[int, Callable[[dict[str, Any]], dict[str, Any]]] = {}
+MIGRATIONS: dict[int, Callable[[dict[str, Any]], dict[str, Any]]] = {1: migrate_v1_to_v2}
 
 
 class FormatError(ValueError):
@@ -49,6 +61,7 @@ def document_from_project(project: Project) -> dict[str, Any]:
                     "name": t.name,
                     "duration": t.duration,
                     "predecessors": list(t.predecessors),
+                    "notes": t.notes,
                 }
                 for t in project.tasks
             ],
@@ -88,6 +101,7 @@ def project_from_document(document: dict[str, Any]) -> Project:
                 name=_expect(raw.get("name"), str, "task name"),
                 duration=_expect(raw.get("duration"), int, "duration"),
                 predecessors=preds,
+                notes=_expect(raw.get("notes"), str, "notes"),
             )
         )
     next_id = _expect(data.get("next_id"), int, "next_id")

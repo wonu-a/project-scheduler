@@ -16,6 +16,7 @@ class Task:
     name: str
     duration: int
     predecessors: list[int] = field(default_factory=list)
+    notes: str = ""  # free text; never affects scheduling
 
     def copy(self) -> Task:
         return replace(self, predecessors=list(self.predecessors))

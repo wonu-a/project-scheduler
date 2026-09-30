@@ -128,16 +128,18 @@ def test_every_fixture_loads(tmp_path, fixture):
 
 
 def test_migration_mechanism(tmp_path, monkeypatch):
-    """Simulate a future v2 so the migrated path is exercised today."""
-    def migrate_v1_to_v2(document):
+    """Simulate the next format version so the generic migrate path is exercised."""
+    current = FORMAT_VERSION
+
+    def migrate_to_next(document):
         document["project"]["tasks"][0]["name"] = "Design (migrated)"
         return document
 
-    monkeypatch.setattr(fmt, "FORMAT_VERSION", 2)
-    monkeypatch.setattr(io, "FORMAT_VERSION", 2)
-    monkeypatch.setitem(fmt.MIGRATIONS, 1, migrate_v1_to_v2)
     path = tmp_path / "old.schedule.json"
-    shutil.copy(FIXTURES / "v1_project.schedule.json", path)
+    save(sample_project(), path)  # written at the current version
+    monkeypatch.setattr(fmt, "FORMAT_VERSION", current + 1)
+    monkeypatch.setattr(io, "FORMAT_VERSION", current + 1)
+    monkeypatch.setitem(fmt.MIGRATIONS, current, migrate_to_next)
     result = load(path)
     assert result.status is LoadStatus.MIGRATED
     assert result.message_code is MessageCode.FILE_MIGRATED
@@ -145,11 +147,36 @@ def test_migration_mechanism(tmp_path, monkeypatch):
 
 
 def test_missing_migration_is_corrupt(tmp_path, monkeypatch):
-    monkeypatch.setattr(fmt, "FORMAT_VERSION", 2)
-    monkeypatch.setattr(io, "FORMAT_VERSION", 2)
     path = tmp_path / "old.schedule.json"
-    shutil.copy(FIXTURES / "v1_project.schedule.json", path)
+    save(sample_project(), path)
+    monkeypatch.setattr(fmt, "FORMAT_VERSION", FORMAT_VERSION + 1)
+    monkeypatch.setattr(io, "FORMAT_VERSION", FORMAT_VERSION + 1)
     assert load(path, now=NOW).status is LoadStatus.CORRUPT
+
+
+def test_v1_file_migrates_to_v2_with_empty_notes(tmp_path):
+    path = tmp_path / "v1.schedule.json"
+    shutil.copy(FIXTURES / "v1_project.schedule.json", path)
+    result = load(path)
+    assert result.status is LoadStatus.MIGRATED
+    assert [t.notes for t in result.project.tasks] == ["", "", ""]
+    assert [t.predecessors for t in result.project.tasks] == [[], [1], [2]]  # nothing else changed
+
+
+def test_notes_round_trip(tmp_path):
+    project = sample_project()
+    project.tasks[0].notes = "Waiting on vendor\nsecond line — ümlaut 日本語"
+    path = tmp_path / "p.schedule.json"
+    save(project, path)
+    assert load(path).project.tasks[0].notes == project.tasks[0].notes
+
+
+def test_notes_with_wrong_type_is_corrupt(tmp_path):
+    document = {"format_version": FORMAT_VERSION, "project": {
+        "start_date": "2026-01-01", "calendar": {"working_weekdays": [0], "holidays": []}, "next_id": 2,
+        "tasks": [{"id": 1, "name": "A", "duration": 1, "predecessors": [], "notes": 42}]}}
+    text = json.dumps(document)
+    assert_corrupt(write(tmp_path / "p.schedule.json", text), text)
 
 
 def test_save_is_atomic_and_leaves_no_temp_file(tmp_path):

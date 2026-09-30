@@ -99,3 +99,17 @@ def test_schedule_is_immutable_and_tasks_are_untouched():
     with pytest.raises(TypeError):
         s.entries[1] = None  # type: ignore[index]
     assert not hasattr(p.tasks[0], "es")
+
+
+def test_notes_never_affect_the_schedule():
+    plain = project(Task(1, "A", 3), Task(2, "B", 2, [1]))
+    noted = project(Task(1, "A", 3, notes="call vendor"), Task(2, "B", 2, [1], notes="x" * 5000))
+    assert compute_schedule(plain).entries == compute_schedule(noted).entries
+
+
+def test_task_copy_keeps_notes_independent():
+    task = Task(1, "A", 1, [], notes="original")
+    copy = task.copy()
+    assert copy == task
+    copy.notes = "changed"
+    assert task.notes == "original"

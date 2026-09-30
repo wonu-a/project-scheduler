@@ -35,7 +35,7 @@ class AddTaskCommand(QUndoCommand):
 
     @classmethod
     def create(
-        cls, session: ProjectSession, name: str, duration: int, predecessors: Iterable[int] = ()
+        cls, session: ProjectSession, name: str, duration: int, predecessors: Iterable[int] = (), notes: str = ""
     ) -> AddTaskCommand | ValidationError:
         preds = list(predecessors)
         error = (
@@ -45,7 +45,7 @@ class AddTaskCommand(QUndoCommand):
         )
         if error:
             return error
-        task = Task(session.project.next_id, name.strip(), duration, preds)
+        task = Task(session.project.next_id, name.strip(), duration, preds, notes.strip())
         return cls(session, task)
 
     def redo(self) -> None:
@@ -97,6 +97,38 @@ class EditTaskCommand(QUndoCommand):
         task = self.session.project.find(self.task_id)
         task.name, task.duration = values
         self.session.recompute()
+
+    def redo(self) -> None:
+        self._apply(self.new)
+
+    def undo(self) -> None:
+        self._apply(self.old)
+
+
+class EditNotesCommand(QUndoCommand):
+    """Changes a task's notes. Notes never affect scheduling."""
+
+    def __init__(self, session: ProjectSession, task: Task, notes: str) -> None:
+        super().__init__(QCoreApplication.translate("Commands", "Edit notes of “{0}”").format(task.name))
+        self.session = session
+        self.task_id = task.id
+        self.old = task.notes
+        self.new = notes
+
+    @classmethod
+    def create(cls, session: ProjectSession, task_id: int, notes: str) -> EditNotesCommand | ValidationError | None:
+        """Returns None when nothing would change. Surrounding whitespace is dropped."""
+        task = session.project.find(task_id)
+        if task is None:
+            return ValidationError(ErrorCode.UNKNOWN_TASK, {"task_id": task_id})
+        notes = notes.strip()
+        if notes == task.notes:
+            return None
+        return cls(session, task, notes)
+
+    def _apply(self, notes: str) -> None:
+        self.session.project.find(self.task_id).notes = notes
+        self.session.recompute()  # refreshes the table's cached rows (the Name tooltip)
 
     def redo(self) -> None:
         self._apply(self.new)

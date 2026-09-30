@@ -6,11 +6,12 @@ import re
 from datetime import date
 from pathlib import Path
 
-from PySide6.QtCore import QEvent, QLocale, QModelIndex, QObject, QSize, QSortFilterProxyModel, Qt
+from PySide6.QtCore import QEvent, QLocale, QModelIndex, QObject, QSize, Qt
 from PySide6.QtGui import QAction, QActionGroup, QCloseEvent, QIcon, QKeySequence, QShowEvent, QUndoStack
 from PySide6.QtWidgets import (
     QAbstractItemView,
     QApplication,
+    QCheckBox,
     QFileDialog,
     QFrame,
     QHBoxLayout,
@@ -37,7 +38,7 @@ from .i18n import LANGUAGES, NATIVE_NAMES, language_manager
 from .session import ProjectSession
 from .settings import AppSettings
 from .task_dialog import TaskDialog
-from .task_model import SORT_ROLE, Column, TaskTableModel
+from .task_model import SORT_ROLE, Column, TaskFilterProxy, TaskTableModel
 from .theme import THEMES, theme_manager
 
 FILE_SUFFIX = ".schedule.json"
@@ -85,13 +86,12 @@ class MainWindow(QMainWindow):
         self.undo_stack = QUndoStack(self)
         self.model = TaskTableModel(self.session, self)
         self.model.edit_handler = self._handle_cell_edit
-        self.proxy = QSortFilterProxyModel(self)
+        self.proxy = TaskFilterProxy(self)
         self.proxy.setSourceModel(self.model)
         self.proxy.setSortRole(SORT_ROLE)
         self.proxy.setFilterKeyColumn(Column.NAME)
         self.proxy.setFilterCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
 
-        self._action_icons: dict[QAction, str] = {}
         self._create_actions()
         self._create_menus()
         self._create_toolbar()
@@ -108,7 +108,6 @@ class MainWindow(QMainWindow):
         self.proxy.modelReset.connect(self._update_actions)
         language_manager.languageChanged.connect(self._sync_view_menu)
         theme_manager.themeChanged.connect(self._sync_view_menu)
-        theme_manager.themeChanged.connect(self._refresh_icons)
 
         self.resize(1280, 780)
         self.retranslate_ui()
@@ -118,9 +117,7 @@ class MainWindow(QMainWindow):
     # --- construction -----------------------------------------------------------------------
 
     def _action(self, icon: str | None = None, slot=None, shortcut=None) -> QAction:
-        action = QAction(theme_manager.icon(icon) if icon else QIcon(), "", self)
-        if icon:
-            self._action_icons[action] = icon  # re-fetched on theme change (per-theme icons)
+        action = QAction(QIcon(f":/icons/{icon}.svg") if icon else QIcon(), "", self)
         if slot is not None:
             action.triggered.connect(slot)
         if shortcut is not None:
@@ -291,6 +288,9 @@ class MainWindow(QMainWindow):
         self.legend_badge.setProperty("critical", True)
         self.filter_edit.setMaximumWidth(420)
         filter_row.addWidget(self.filter_edit)
+        self.critical_only_check = QCheckBox(objectName="criticalOnlyCheck")
+        self.critical_only_check.toggled.connect(self.proxy.set_critical_only)
+        filter_row.addWidget(self.critical_only_check)
         filter_row.addStretch(1)
         filter_row.addWidget(self.legend_badge)
         filter_row.addWidget(self.legend_label)
@@ -380,6 +380,7 @@ class MainWindow(QMainWindow):
         self.finish_card.caption.setText(self.tr("Project finish"))
         self.critical_card.caption.setText(self.tr("Critical tasks"))
         self.filter_edit.setPlaceholderText(self.tr("Filter tasks by name…"))
+        self.critical_only_check.setText(self.tr("Show critical tasks only"))
         self.legend_badge.setText(self.tr("Critical"))
         self.legend_label.setText(self.tr("Zero slack: any delay moves the project finish."))
         self._update_title()
@@ -416,10 +417,6 @@ class MainWindow(QMainWindow):
         count = len(self.table.selectionModel().selectedRows())
         self.edit_action.setEnabled(count == 1)
         self.delete_action.setEnabled(count > 0)
-
-    def _refresh_icons(self, *_args) -> None:
-        for action, name in self._action_icons.items():
-            action.setIcon(theme_manager.icon(name))
 
     def _sync_view_menu(self, *_args) -> None:
         self.theme_actions[theme_manager.name].setChecked(True)

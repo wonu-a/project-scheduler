@@ -316,3 +316,65 @@ def test_calendar_add_icon_matches_its_text_colour_in_every_state(qtbot, session
         qtbot.mouseClick(add, Qt.MouseButton.LeftButton)  # however it gets there, the icon follows
         assert icon_colour(add) == ("#ffffff" if add.isDefault() else text_colour)
         dialog.reject()
+
+
+# --- task notes -----------------------------------------------------------------------------
+
+def test_task_dialog_add_with_notes(qtbot, session):
+    dialog, stack = make_task_dialog(qtbot, session)
+    qtbot.keyClicks(dialog.name_edit, "Review")
+    qtbot.keyClicks(dialog.notes_edit, "Ask Sam first")
+    dialog.ok_button.click()
+    assert stack.count() == 1
+    assert session.project.tasks[-1].notes == "Ask Sam first"
+
+
+def test_task_dialog_edit_shows_and_changes_notes_in_one_undo_step(qtbot, session):
+    session.project.find(1).notes = "old note"
+    dialog, stack = make_task_dialog(qtbot, session, task_id=1)
+    assert dialog.notes_edit.toPlainText() == "old note"
+    dialog.notes_edit.setPlainText("new note")
+    dialog.name_edit.setText("Design v2")
+    dialog.ok_button.click()
+    task = session.project.find(1)
+    assert (task.name, task.notes) == ("Design v2", "new note")
+    assert stack.count() == 1  # name + notes together
+    stack.undo()
+    assert (task.name, task.notes) == ("Design", "old note")
+
+
+def test_task_dialog_notes_cancel_changes_nothing(qtbot, session):
+    dialog, stack = make_task_dialog(qtbot, session, task_id=1)
+    qtbot.keyClicks(dialog.notes_edit, "not kept")
+    dialog.buttons.button(dialog.buttons.StandardButton.Cancel).click()
+    assert stack.count() == 0
+    assert session.project.find(1).notes == ""
+
+
+def test_task_dialog_unchanged_notes_push_nothing(qtbot, session):
+    session.project.find(1).notes = "same"
+    dialog, stack = make_task_dialog(qtbot, session, task_id=1)
+    dialog.ok_button.click()
+    assert stack.count() == 0
+
+
+def test_enter_in_calendar_dialog_confirms_instead_of_adding_a_holiday(qtbot, session):
+    dialog, stack = make_calendar_dialog(qtbot, session)
+    assert dialog.ok_button.isDefault()
+    assert not dialog.add_holiday_button.isDefault()
+    dialog.start_edit.setDate(QDate(2026, 1, 12))
+    dialog.start_edit.setFocus()
+    qtbot.keyClick(dialog.start_edit, Qt.Key.Key_Return)
+    qtbot.waitUntil(lambda: not dialog.isVisible())
+    assert dialog.result() == dialog.DialogCode.Accepted
+    assert session.project.calendar.holidays == frozenset()  # no holiday added
+    assert session.project.calendar.start_date == date(2026, 1, 12)  # the edit was applied
+    assert stack.count() == 1
+
+
+def test_clicking_add_keeps_ok_as_the_default(qtbot, session):
+    dialog, _ = make_calendar_dialog(qtbot, session)
+    qtbot.mouseClick(dialog.add_holiday_button, Qt.MouseButton.LeftButton)
+    assert dialog.holiday_list.count() == 1
+    assert not dialog.add_holiday_button.isDefault()
+    assert dialog.ok_button.isDefault()

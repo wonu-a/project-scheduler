@@ -15,6 +15,7 @@ from project_scheduler.ui.commands import (
     ChangeStartDateCommand,
     DeleteTasksCommand,
     EditCalendarCommand,
+    EditNotesCommand,
     EditTaskCommand,
     RemoveDependencyCommand,
 )
@@ -30,6 +31,7 @@ COMMANDS = {
     "remove_dependency": lambda s: RemoveDependencyCommand.create(s, 2, 4),
     "edit_calendar": lambda s: EditCalendarCommand.create(s, {0, 1, 2}, {date(2026, 1, 7)}),
     "change_start_date": lambda s: ChangeStartDateCommand.create(s, date(2026, 2, 1)),
+    "edit_notes": lambda s: EditNotesCommand.create(s, 2, "Waiting on vendor"),
 }
 
 
@@ -122,3 +124,32 @@ def test_no_op_edits_return_none(session):
     assert ChangeStartDateCommand.create(session, date(2026, 1, 2)) is None
     assert EditCalendarCommand.create(session, {0, 1, 2, 3, 4}, set()) is None
     assert DeleteTasksCommand.create(session, []) is None
+
+
+def test_add_task_keeps_notes(session):
+    AddTaskCommand.create(session, "QA", 1, notes="  check the logs  ").redo()
+    assert session.project.tasks[-1].notes == "check the logs"
+
+
+def test_edit_notes_can_clear_and_undo(session):
+    stack = QUndoStack()
+    stack.push(EditNotesCommand.create(session, 1, "first"))
+    stack.push(EditNotesCommand.create(session, 1, "   "))  # whitespace only clears the note
+    assert session.project.find(1).notes == ""
+    stack.undo()
+    assert session.project.find(1).notes == "first"
+    stack.undo()
+    assert session.project.find(1).notes == ""
+
+
+def test_edit_notes_no_op_and_unknown_task(session):
+    assert EditNotesCommand.create(session, 1, "") is None
+    assert EditNotesCommand.create(session, 99, "x").code is ErrorCode.UNKNOWN_TASK
+
+
+def test_delete_and_undo_restore_notes(session):
+    session.project.find(2).notes = "keep me"
+    stack = QUndoStack()
+    stack.push(DeleteTasksCommand.create(session, [2]))
+    stack.undo()
+    assert session.project.find(2).notes == "keep me"

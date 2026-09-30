@@ -98,6 +98,9 @@ class CalendarDialog(QDialog):
         _no_click_stepping(self.holiday_edit)
         self.holiday_edit.setDate(to_qdate(calendar.start_date))
         self.add_holiday_button = _AddButton(objectName="addHolidayButton")
+        # Dialog push buttons are auto-default, which made Add the default button when the dialog
+        # opened, so Enter added a holiday instead of confirming. OK stays the default.
+        self.add_holiday_button.setAutoDefault(False)
         self.add_holiday_button.clicked.connect(self._add_holiday)
         self.holiday_list = QListWidget(objectName="holidayList")
         self.holiday_list.setSelectionMode(QListWidget.SelectionMode.ExtendedSelection)
@@ -115,7 +118,6 @@ class CalendarDialog(QDialog):
         # Our own OK button: a standard one gets Qt's text back on every language change.
         self.buttons = QDialogButtonBox(QDialogButtonBox.StandardButton.Cancel)
         self.ok_button = self.buttons.addButton("", QDialogButtonBox.ButtonRole.AcceptRole)
-        self.ok_button.setDefault(True)
         self.buttons.accepted.connect(self.accept)
         self.buttons.rejected.connect(self.reject)
 
@@ -139,6 +141,8 @@ class CalendarDialog(QDialog):
         layout.addStretch(0)  # takes the spare height while the list is hidden
         self._spacer_index = layout.count() - 1
         layout.addWidget(self.buttons)
+        # Only once the button box is inside the dialog does the dialog register OK as its default.
+        self.ok_button.setDefault(True)
         self.resize(440, 520)
         self.retranslate_ui()
 

@@ -6,7 +6,7 @@ from collections.abc import Callable
 from enum import IntEnum
 from typing import Any
 
-from PySide6.QtCore import QAbstractTableModel, QLocale, QModelIndex, QObject, QPersistentModelIndex, Qt
+from PySide6.QtCore import QAbstractTableModel, QLocale, QModelIndex, QObject, QPersistentModelIndex, QSortFilterProxyModel, Qt
 from PySide6.QtGui import QIcon
 
 from .formatting import format_date, id_locale
@@ -197,6 +197,8 @@ class TaskTableModel(QAbstractTableModel):
             return self._rows[row][col]
         if role == TASK_ID_ROLE:
             return task.id
+        if role == Qt.ItemDataRole.ToolTipRole and col == Column.NAME:
+            return task.notes or None  # hovering a task's name shows its notes
         times = self.session.schedule.entries.get(task.id)
         if times is None:  # row inserted, schedule not yet recomputed
             return None
@@ -289,3 +291,30 @@ class PredecessorListModel(QAbstractTableModel):
 
     def checked_ids(self) -> list[int]:
         return list(self._checked)
+
+
+class TaskFilterProxy(QSortFilterProxyModel):
+    """Sorting plus two filters: the name filter text, and optionally critical tasks only."""
+
+    def __init__(self, parent: QObject | None = None) -> None:
+        super().__init__(parent)
+        self._critical_only = False
+
+    @property
+    def critical_only(self) -> bool:
+        return self._critical_only
+
+    def set_critical_only(self, value: bool) -> None:
+        if value != self._critical_only:
+            self.beginFilterChange()
+            self._critical_only = value
+            self.endFilterChange(QSortFilterProxyModel.Direction.Rows)
+
+    def filterAcceptsRow(self, source_row: int, source_parent: QModelIndex | QPersistentModelIndex) -> bool:
+        if not super().filterAcceptsRow(source_row, source_parent):  # the name filter
+            return False
+        if not self._critical_only:
+            return True
+        model = self.sourceModel()
+        times = model.session.schedule.entries.get(model.task_id_at(source_row))
+        return times is not None and times.critical

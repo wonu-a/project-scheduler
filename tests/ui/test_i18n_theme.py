@@ -193,7 +193,7 @@ def _icon_colour(icon):
     return None
 
 
-def test_add_icon_uses_the_theme_text_colour_and_swaps_live(window, qtbot):
+def test_calendar_add_icon_uses_the_theme_text_colour_and_toolbar_icon_is_unchanged(window, qtbot):
     dialog = window.edit_calendar()
     add = dialog.add_holiday_button
 
@@ -202,10 +202,39 @@ def test_add_icon_uses_the_theme_text_colour_and_swaps_live(window, qtbot):
         expected = "#ffffff" if add.isDefault() else text_colour  # white while it is the blue default
         assert _icon_colour(add.icon()) == expected
 
-    assert _icon_colour(window.add_action.icon()) == "#1e2533"  # light theme text colour
-    dialog_add_check("#1e2533")
+    dialog_add_check("#1e2533")  # light theme text colour
+    assert _icon_colour(window.add_action.icon()) == "#6366f1"  # toolbar keeps its original indigo icon
     window.set_theme("dark")
-    assert _icon_colour(window.add_action.icon()) == "#e4e7ee"  # dark theme text colour
-    dialog_add_check("#e4e7ee")
+    dialog_add_check("#e4e7ee")  # dark theme text colour
+    assert _icon_colour(window.add_action.icon()) == "#6366f1"
     assert _icon_colour(window.delete_action.icon()) == "#7c8aa0"  # other icons are unchanged
     dialog.reject()
+
+
+def test_new_feature_strings_are_translated(window, qtbot):
+    dialog = window.add_task()
+    assert window.critical_only_check.text() == "Show critical tasks only"
+    assert dialog.notes_label.text() == "N&otes:"
+    window.set_language("de")
+    qtbot.waitUntil(lambda: window.critical_only_check.text() == "Nur kritische Aufgaben anzeigen")
+    qtbot.waitUntil(lambda: dialog.notes_label.text() == "N&otizen:")
+    assert dialog.notes_edit.placeholderText() == "Optionale Notizen zu dieser Aufgabe"
+    window.set_language("ja")
+    qtbot.waitUntil(lambda: window.critical_only_check.text() == "クリティカルタスクのみ表示")
+    qtbot.waitUntil(lambda: dialog.notes_label.text() == "メモ(&O):")
+    dialog.reject()
+
+
+def test_notes_box_follows_the_theme(window):
+    from PySide6.QtGui import QPalette
+
+    def base():
+        dialog = window.add_task()
+        dialog.notes_edit.ensurePolished()
+        colour = dialog.notes_edit.palette().color(QPalette.ColorRole.Base)
+        dialog.reject()
+        return colour
+
+    assert base().lightness() > 200  # white box in the light theme
+    window.set_theme("dark")
+    assert base().lightness() < 60  # dark box in the dark theme

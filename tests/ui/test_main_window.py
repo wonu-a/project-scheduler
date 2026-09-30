@@ -192,3 +192,47 @@ def test_name_column_fills_spare_width_until_user_resizes_it(window, qtbot):
     window.resize(1400, 780)
     qtbot.waitUntil(lambda: window.width() == 1400)
     assert header.sectionSize(Column.NAME) == 333  # the user's width is kept
+
+
+# --- task notes in the table ----------------------------------------------------------------
+
+def test_name_cell_tooltip_shows_notes(window):
+    from project_scheduler.ui.commands import EditNotesCommand
+
+    name_cell = lambda: window.proxy.index(0, Column.NAME)
+    assert name_cell().data(Qt.ItemDataRole.ToolTipRole) is None  # no note, no tooltip
+    window.undo_stack.push(EditNotesCommand.create(window.session, 1, "Waiting on vendor"))
+    assert name_cell().data(Qt.ItemDataRole.ToolTipRole) == "Waiting on vendor"
+    window.undo_action.trigger()
+    assert name_cell().data(Qt.ItemDataRole.ToolTipRole) is None
+
+
+# --- critical-only filter -------------------------------------------------------------------
+
+def visible_names(window):
+    return sorted(window.proxy.index(r, Column.NAME).data() for r in range(window.proxy.rowCount()))
+
+
+def test_critical_only_filter(window, qtbot):
+    # Design (3d) -> Build (2d) -> Launch; Docs (1d) has slack, so it is not critical.
+    assert visible_names(window) == ["Build", "Design", "Docs", "Launch"]
+    qtbot.mouseClick(window.critical_only_check, Qt.MouseButton.LeftButton)
+    assert window.critical_only_check.isChecked()
+    assert visible_names(window) == ["Build", "Design", "Launch"]
+    qtbot.mouseClick(window.critical_only_check, Qt.MouseButton.LeftButton)
+    assert visible_names(window) == ["Build", "Design", "Docs", "Launch"]
+
+
+def test_critical_only_combines_with_name_filter(window):
+    window.critical_only_check.setChecked(True)
+    window.filter_edit.setText("d")  # Design, Docs, Build contain "d"
+    assert visible_names(window) == ["Build", "Design"]
+
+
+def test_critical_only_follows_schedule_changes(window):
+    window.critical_only_check.setChecked(True)
+    # Docs becomes the longest path to Launch, so it turns critical and Build stops being critical.
+    window.proxy.sourceModel().setData(window.model.index(2, Column.DURATION), 10, Qt.ItemDataRole.EditRole)
+    assert visible_names(window) == ["Docs", "Launch"]
+    window.undo_action.trigger()
+    assert visible_names(window) == ["Build", "Design", "Launch"]

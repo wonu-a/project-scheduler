@@ -3,6 +3,7 @@
     <qresource prefix="/">
         <file>styles/dark.qss</file>
         <file>styles/light.qss</file>
+        <file>icons/add.svg</file>
         <file>icons/add-dark.svg</file>
         <file>icons/add-default.svg</file>
         <file>icons/add-light.svg</file>

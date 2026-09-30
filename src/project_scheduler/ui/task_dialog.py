@@ -1,4 +1,4 @@
-"""Add or edit a task: name, duration and predecessors."""
+"""Add or edit a task: name, duration, notes and predecessors."""
 
 from __future__ import annotations
 
@@ -11,6 +11,7 @@ from PySide6.QtWidgets import (
     QLabel,
     QLineEdit,
     QListView,
+    QPlainTextEdit,
     QSpinBox,
     QVBoxLayout,
     QWidget,
@@ -21,6 +22,7 @@ from ..domain.model import MAX_DURATION
 from .commands import (
     AddDependencyCommand,
     AddTaskCommand,
+    EditNotesCommand,
     EditTaskCommand,
     RemoveDependencyCommand,
     predecessor_changes,
@@ -47,6 +49,10 @@ class TaskDialog(QDialog):
         self.name_edit = QLineEdit(objectName="nameEdit")
         self.duration_spin = QSpinBox(objectName="durationSpin")
         self.duration_spin.setRange(0, MAX_DURATION)
+        self.notes_edit = QPlainTextEdit(objectName="notesEdit")
+        self.notes_edit.setTabChangesFocus(True)  # Tab moves on, as in the other fields
+        self.notes_edit.setMinimumHeight(64)
+        self.notes_edit.setMaximumHeight(96)
         self.filter_edit = QLineEdit(objectName="filterEdit")
         self.filter_edit.setClearButtonEnabled(True)
         self.filter_edit.addAction(QIcon(":/icons/search.svg"), QLineEdit.ActionPosition.LeadingPosition)
@@ -72,6 +78,7 @@ class TaskDialog(QDialog):
 
         self.name_label = QLabel(buddy=self.name_edit)
         self.duration_label = QLabel(buddy=self.duration_spin)
+        self.notes_label = QLabel(buddy=self.notes_edit)
         self.predecessors_label = QLabel(buddy=self.filter_edit)
         self.form = QFormLayout()
         # The macOS style defaults to FieldsStayAtSizeHint, which keeps the name field narrow and
@@ -79,6 +86,7 @@ class TaskDialog(QDialog):
         self.form.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
         self.form.addRow(self.name_label, self.name_edit)
         self.form.addRow(self.duration_label, self.duration_spin)
+        self.form.addRow(self.notes_label, self.notes_edit)
         self.form.addRow(self.predecessors_label, self.filter_edit)
         self.form.addRow(self.predecessor_view)
         # With no other tasks there is nothing to pick; an empty list box looks like a text field.
@@ -102,9 +110,10 @@ class TaskDialog(QDialog):
         if task:
             self.name_edit.setText(task.name)
             self.duration_spin.setValue(task.duration)
+            self.notes_edit.setPlainText(task.notes)
         else:
             self.duration_spin.setValue(1)
-        self.resize(460, 520 if has_candidates else 260)
+        self.resize(460, 600 if has_candidates else 340)
         self.retranslate_ui()
 
     def retranslate_ui(self) -> None:
@@ -115,6 +124,8 @@ class TaskDialog(QDialog):
         self.title_label.setText(title)
         self.name_label.setText(self.tr("&Name:"))
         self.duration_label.setText(self.tr("&Duration:"))
+        self.notes_label.setText(self.tr("N&otes:"))
+        self.notes_edit.setPlaceholderText(self.tr("Optional notes about this task"))
         self.predecessors_label.setText(self.tr("&Predecessors:"))
         self.duration_spin.setSuffix(self.tr(" working days"))
         self.name_edit.setPlaceholderText(self.tr("What needs to be done?"))
@@ -145,8 +156,9 @@ class TaskDialog(QDialog):
         name = self.name_edit.text()
         duration = self.duration_spin.value()
         preds = self.predecessors.checked_ids()
+        notes = self.notes_edit.toPlainText()
         if self.task_id is None:
-            command = AddTaskCommand.create(self.session, name, duration, preds)
+            command = AddTaskCommand.create(self.session, name, duration, preds, notes)
             if isinstance(command, ValidationError):
                 self.show_error(command)
                 return
@@ -163,11 +175,14 @@ class TaskDialog(QDialog):
             self.show_error(changes)
             return
         to_remove, to_add = changes
-        count = (edit is not None) + len(to_remove) + len(to_add)
+        notes_edit = EditNotesCommand.create(self.session, self.task_id, notes)  # can only be None or a command here
+        count = (edit is not None) + (notes_edit is not None) + len(to_remove) + len(to_add)
         if count > 1:
             self.undo_stack.beginMacro(self.tr("Edit task “{0}”").format(name.strip()))
         if edit is not None:
             self.undo_stack.push(edit)
+        if notes_edit is not None:
+            self.undo_stack.push(notes_edit)
         # The whole set was validated above, so each single step is valid when it is created.
         for pred in to_remove:
             self.undo_stack.push(RemoveDependencyCommand.create(self.session, pred, self.task_id))
