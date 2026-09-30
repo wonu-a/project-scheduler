@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from PySide6.QtCore import QFile, QIODevice, QObject, Signal
-from PySide6.QtGui import QColor
+from PySide6.QtGui import QColor, QIcon
 from PySide6.QtWidgets import QApplication
 
 THEMES = ("light", "dark")
@@ -32,6 +32,15 @@ class ThemeManager(QObject):
         super().__init__()
         self.name = DEFAULT_THEME
         self.palette = TablePalette(**vars(_PALETTES[DEFAULT_THEME]))
+
+    def icon(self, name: str) -> QIcon:
+        """``:/icons/<name>-<theme>.svg`` when the icon has per-theme versions, else ``:/icons/<name>.svg``.
+
+        Per-theme icons are drawn in that theme's text colour. Their users re-fetch the icon on
+        ``themeChanged``.
+        """
+        themed = f":/icons/{name}-{self.name}.svg"
+        return QIcon(themed if QFile.exists(themed) else f":/icons/{name}.svg")
 
     def apply(self, name: str) -> None:
         if name not in THEMES:

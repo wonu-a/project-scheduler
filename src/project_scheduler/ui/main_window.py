@@ -91,6 +91,7 @@ class MainWindow(QMainWindow):
         self.proxy.setFilterKeyColumn(Column.NAME)
         self.proxy.setFilterCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
 
+        self._action_icons: dict[QAction, str] = {}
         self._create_actions()
         self._create_menus()
         self._create_toolbar()
@@ -107,6 +108,7 @@ class MainWindow(QMainWindow):
         self.proxy.modelReset.connect(self._update_actions)
         language_manager.languageChanged.connect(self._sync_view_menu)
         theme_manager.themeChanged.connect(self._sync_view_menu)
+        theme_manager.themeChanged.connect(self._refresh_icons)
 
         self.resize(1280, 780)
         self.retranslate_ui()
@@ -116,7 +118,9 @@ class MainWindow(QMainWindow):
     # --- construction -----------------------------------------------------------------------
 
     def _action(self, icon: str | None = None, slot=None, shortcut=None) -> QAction:
-        action = QAction(QIcon(f":/icons/{icon}.svg") if icon else QIcon(), "", self)
+        action = QAction(theme_manager.icon(icon) if icon else QIcon(), "", self)
+        if icon:
+            self._action_icons[action] = icon  # re-fetched on theme change (per-theme icons)
         if slot is not None:
             action.triggered.connect(slot)
         if shortcut is not None:
@@ -412,6 +416,10 @@ class MainWindow(QMainWindow):
         count = len(self.table.selectionModel().selectedRows())
         self.edit_action.setEnabled(count == 1)
         self.delete_action.setEnabled(count > 0)
+
+    def _refresh_icons(self, *_args) -> None:
+        for action, name in self._action_icons.items():
+            action.setIcon(theme_manager.icon(name))
 
     def _sync_view_menu(self, *_args) -> None:
         self.theme_actions[theme_manager.name].setChecked(True)

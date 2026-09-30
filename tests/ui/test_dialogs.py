@@ -269,3 +269,50 @@ def test_calendar_dialog_cancel_changes_nothing(qtbot, session):
     dialog.reject()
     assert stack.count() == 0
     assert session.project.calendar.working_weekdays == {0, 1, 2, 3, 4}
+
+
+def test_clicking_a_date_field_never_changes_its_date(qtbot, session):
+    """Clicks on the closed date field used to add a year. Only the popup and typing change it."""
+    from PySide6.QtCore import QPoint
+    from PySide6.QtWidgets import QAbstractSpinBox
+
+    dialog, _ = make_calendar_dialog(qtbot, session)
+    for edit in (dialog.start_edit, dialog.holiday_edit):
+        assert edit.buttonSymbols() == QAbstractSpinBox.ButtonSymbols.NoButtons
+        before = edit.date()
+        for fx in (0.1, 0.3, 0.5, 0.7, 0.85):
+            for fy in (0.2, 0.5, 0.8):
+                point = QPoint(int(edit.width() * fx), int(edit.height() * fy))
+                qtbot.mouseMove(edit, point)  # real clicks come with hover movement
+                qtbot.mouseClick(edit, Qt.MouseButton.LeftButton, pos=point)
+                assert edit.date() == before, (edit.objectName(), fx, fy)
+    # typing still works: Up on the year section moves one year
+    edit = dialog.start_edit
+    year = edit.date().year()
+    edit.setFocus()
+    edit.setCurrentSection(edit.Section.YearSection)
+    qtbot.keyClick(edit, Qt.Key.Key_Up)
+    assert edit.date().year() == year + 1
+
+
+def test_calendar_add_icon_matches_its_text_colour_in_every_state(qtbot, session):
+    """The Add icon is the theme's text colour, and white whenever the button is the blue default."""
+    from project_scheduler.ui.theme import theme_manager
+
+    def icon_colour(button):
+        button.grab()  # the icon is chosen when the button is drawn
+        image = button.icon().pixmap(24, 24).toImage()
+        return next(image.pixelColor(x, y).name() for y in range(24) for x in range(24)
+                    if image.pixelColor(x, y).alpha() == 255)
+
+    for theme, text_colour in (("light", "#1e2533"), ("dark", "#e4e7ee")):
+        theme_manager.apply(theme)
+        dialog, _ = make_calendar_dialog(qtbot, session)
+        add = dialog.add_holiday_button
+        for blue in (False, True, False):  # both states, and back again
+            add.setDefault(blue)
+            assert add.isDefault() == blue
+            assert icon_colour(add) == ("#ffffff" if blue else text_colour), (theme, blue)
+        qtbot.mouseClick(add, Qt.MouseButton.LeftButton)  # however it gets there, the icon follows
+        assert icon_colour(add) == ("#ffffff" if add.isDefault() else text_colour)
+        dialog.reject()

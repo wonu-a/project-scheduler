@@ -5,7 +5,7 @@ from __future__ import annotations
 from datetime import date
 
 from PySide6.QtCore import QDate, QEvent, QLocale, Qt
-from PySide6.QtGui import QIcon, QUndoStack
+from PySide6.QtGui import QIcon, QPaintEvent, QUndoStack
 from PySide6.QtWidgets import (
     QCheckBox,
     QDateEdit,
@@ -26,8 +26,44 @@ from .commands import ChangeStartDateCommand, EditCalendarCommand
 from .errors import error_text
 from .formatting import format_date, from_qdate, to_qdate
 from .sizing import reserve_wrapped_label_heights
+from .theme import theme_manager
 from .session import ProjectSession
 
+
+def _no_click_stepping(edit: QDateEdit) -> None:
+    """Clicking a date field must never change its date; only the calendar popup and typing do.
+
+    With a calendar popup, Qt hit-tests a click as a combo box but then treats the result as a
+    spin box, and "combo box frame" has the same value as "spin box up", so some clicks added a
+    year. Without step buttons Qt never steps on a click. The dropdown arrow still opens the
+    calendar, and the Up/Down keys still change the section being edited.
+    """
+    edit.setButtonSymbols(QDateEdit.ButtonSymbols.NoButtons)
+
+
+
+class _AddButton(QPushButton):
+    """The Add button, whose icon is always the same colour as its text.
+
+    The text is the theme's text colour, except while the button is the dialog's (blue) default
+    button, when the stylesheet makes it white. The icon is picked when the button is drawn, so it
+    follows every way the button can become or stop being the default, and theme changes.
+    """
+
+    def __init__(self, objectName: str) -> None:
+        super().__init__(objectName=objectName)
+        self._icon_key: tuple[str, bool] | None = None
+        self._update_icon()
+
+    def _update_icon(self) -> None:
+        key = (theme_manager.name, self.isDefault())
+        if key != self._icon_key:
+            self._icon_key = key
+            self.setIcon(QIcon(":/icons/add-default.svg") if self.isDefault() else theme_manager.icon("add"))
+
+    def paintEvent(self, event: QPaintEvent) -> None:
+        self._update_icon()
+        super().paintEvent(event)
 
 class CalendarDialog(QDialog):
     def __init__(self, session: ProjectSession, undo_stack: QUndoStack, parent: QWidget | None = None) -> None:
@@ -41,6 +77,7 @@ class CalendarDialog(QDialog):
         self.start_caption = QLabel(objectName="sectionLabel")
         self.start_edit = QDateEdit(objectName="startDateEdit")
         self.start_edit.setCalendarPopup(True)
+        _no_click_stepping(self.start_edit)
         self.start_edit.setDate(to_qdate(calendar.start_date))
 
         self.weekdays_caption = QLabel(objectName="sectionLabel")
@@ -58,8 +95,9 @@ class CalendarDialog(QDialog):
         self.holidays_caption = QLabel(objectName="sectionLabel")
         self.holiday_edit = QDateEdit(objectName="holidayEdit")
         self.holiday_edit.setCalendarPopup(True)
+        _no_click_stepping(self.holiday_edit)
         self.holiday_edit.setDate(to_qdate(calendar.start_date))
-        self.add_holiday_button = QPushButton(QIcon(":/icons/add.svg"), "", objectName="addHolidayButton")
+        self.add_holiday_button = _AddButton(objectName="addHolidayButton")
         self.add_holiday_button.clicked.connect(self._add_holiday)
         self.holiday_list = QListWidget(objectName="holidayList")
         self.holiday_list.setSelectionMode(QListWidget.SelectionMode.ExtendedSelection)

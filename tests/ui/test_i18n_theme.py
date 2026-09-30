@@ -180,3 +180,32 @@ def test_date_picker_popup_follows_the_theme(window, qtbot):
     window.set_theme("dark")
     dark_base, dark_text = popup_colors()
     assert dark_base.lightness() < 60 and dark_text.lightness() > 180  # light text on dark, readable
+
+
+def _icon_colour(icon):
+    """The colour of the icon's drawn (opaque) pixels."""
+    image = icon.pixmap(24, 24).toImage()
+    for y in range(image.height()):
+        for x in range(image.width()):
+            colour = image.pixelColor(x, y)
+            if colour.alpha() == 255:
+                return colour.name()
+    return None
+
+
+def test_add_icon_uses_the_theme_text_colour_and_swaps_live(window, qtbot):
+    dialog = window.edit_calendar()
+    add = dialog.add_holiday_button
+
+    def dialog_add_check(text_colour):
+        add.grab()  # the dialog's Add icon is chosen when the button is drawn
+        expected = "#ffffff" if add.isDefault() else text_colour  # white while it is the blue default
+        assert _icon_colour(add.icon()) == expected
+
+    assert _icon_colour(window.add_action.icon()) == "#1e2533"  # light theme text colour
+    dialog_add_check("#1e2533")
+    window.set_theme("dark")
+    assert _icon_colour(window.add_action.icon()) == "#e4e7ee"  # dark theme text colour
+    dialog_add_check("#e4e7ee")
+    assert _icon_colour(window.delete_action.icon()) == "#7c8aa0"  # other icons are unchanged
+    dialog.reject()

@@ -4,48 +4,48 @@
 <context>
     <name>CalendarDialog</name>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="108"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="146"/>
         <source>OK</source>
         <translation>Bestätigen</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="110"/>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="111"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="148"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="149"/>
         <source>Project calendar</source>
         <translation>Projektkalender</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="112"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="150"/>
         <source>Project start date</source>
         <translation>Projektbeginn</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="113"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="151"/>
         <source>Working days</source>
         <translation>Arbeitstage</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="114"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="152"/>
         <source>Holidays</source>
         <translation>Feiertage</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="115"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="153"/>
         <source>Add</source>
         <translation>Hinzufügen</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="116"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="154"/>
         <source>Remove</source>
         <translation>Entfernen</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="122"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="160"/>
         <source>No holidays yet. Pick a date above and add it.</source>
         <translation>Noch keine Feiertage. Wählen Sie oben ein Datum und fügen Sie es hinzu.</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="174"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="212"/>
         <source>Edit calendar</source>
         <translation>Kalender bearbeiten</translation>
     </message>
@@ -189,240 +189,240 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="335"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="339"/>
         <source>&amp;File</source>
         <translation>&amp;Datei</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="336"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="340"/>
         <source>&amp;Edit</source>
         <translation>&amp;Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="337"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="341"/>
         <source>&amp;Project</source>
         <translation>&amp;Projekt</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="338"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="342"/>
         <source>&amp;View</source>
         <translation>&amp;Ansicht</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="339"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="343"/>
         <source>Open &amp;recent</source>
         <translation>&amp;Zuletzt geöffnet</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="340"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="344"/>
         <source>Load &amp;sample project</source>
         <translation>&amp;Beispielprojekt laden</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="341"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="345"/>
         <source>&amp;Theme</source>
         <translation>&amp;Design</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="342"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="346"/>
         <source>&amp;Language</source>
         <translation>&amp;Sprache</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="344"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="348"/>
         <source>&amp;New project</source>
         <translation>&amp;Neues Projekt</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="345"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="349"/>
         <source>&amp;Open…</source>
         <translation>Ö&amp;ffnen…</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="346"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="350"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="347"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="351"/>
         <source>Save &amp;as…</source>
         <translation>Speichern &amp;unter…</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="348"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="352"/>
         <source>&amp;Quit</source>
         <translation>&amp;Beenden</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="349"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="353"/>
         <source>&amp;Undo</source>
         <translation>&amp;Rückgängig</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="350"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="354"/>
         <source>&amp;Redo</source>
         <translation>&amp;Wiederholen</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="351"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="355"/>
         <source>&amp;Add task…</source>
         <translation>Aufgabe &amp;hinzufügen…</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="352"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="356"/>
         <source>&amp;Edit task…</source>
         <translation>Aufgabe &amp;bearbeiten…</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="353"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="357"/>
         <source>&amp;Delete</source>
         <translation>&amp;Löschen</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="354"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="358"/>
         <source>&amp;Calendar…</source>
         <translation>&amp;Kalender…</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="356"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="360"/>
         <source>{0} tasks</source>
         <translation>{0} Aufgaben</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="357"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="361"/>
         <source>&amp;Light</source>
         <translation>&amp;Hell</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="358"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="362"/>
         <source>&amp;Dark</source>
         <translation>&amp;Dunkel</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="359"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="363"/>
         <source>English</source>
         <translation>Englisch</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="359"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="363"/>
         <source>German</source>
         <translation>Deutsch</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="359"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="363"/>
         <source>Japanese</source>
         <translation>Japanisch</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="363"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="367"/>
         <source>{0} ({1})</source>
         <translation>{0} ({1})</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="364"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="368"/>
         <source>Toolbar</source>
         <translation>Werkzeugleiste</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="372"/>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="374"/>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="424"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="376"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="378"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="432"/>
         <source>Project Scheduler</source>
         <translation>Projektplaner</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="375"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="379"/>
         <source>Tasks</source>
         <translation>Aufgaben</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="376"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="380"/>
         <source>Project finish</source>
         <translation>Projektende</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="377"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="381"/>
         <source>Critical tasks</source>
         <translation>Kritische Aufgaben</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="378"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="382"/>
         <source>Filter tasks by name…</source>
         <translation>Aufgaben nach Name filtern…</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="379"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="383"/>
         <source>Critical</source>
         <translation>Kritisch</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="380"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="384"/>
         <source>Zero slack: any delay moves the project finish.</source>
         <translation>Kein Puffer: Jede Verzögerung verschiebt das Projektende.</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="387"/>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="500"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="391"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="508"/>
         <source>Untitled</source>
         <translation>Unbenannt</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="391"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="395"/>
         <source>{0}[*] — Project Scheduler</source>
         <translation>{0}[*] — Projektplaner</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="399"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="403"/>
         <source>—</source>
         <translation>—</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="426"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="434"/>
         <source>OK</source>
         <translation>Bestätigen</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="448"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="456"/>
         <source>Unsaved changes</source>
         <translation>Nicht gespeicherte Änderungen</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="449"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="457"/>
         <source>{0} has unsaved changes. Save them first?</source>
         <translation>{0} enthält nicht gespeicherte Änderungen. Zuerst speichern?</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="465"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="473"/>
         <source>Loaded a sample project with {0} tasks.</source>
         <translation>Beispielprojekt mit {0} Aufgaben geladen.</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="473"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="481"/>
         <source>Open project</source>
         <translation>Projekt öffnen</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="473"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="481"/>
         <source>Schedules (*.schedule.json);;All files (*)</source>
         <translation>Zeitpläne (*.schedule.json);;Alle Dateien (*)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="502"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="510"/>
         <source>Save project</source>
         <translation>Projekt speichern</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="502"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="510"/>
         <source>Schedules (*.schedule.json)</source>
         <translation>Zeitpläne (*.schedule.json)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="521"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="529"/>
         <source>Saved {0}.</source>
         <translation>{0} gespeichert.</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="528"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="536"/>
         <source>No recent files</source>
         <translation>Keine zuletzt geöffneten Dateien</translation>
     </message>

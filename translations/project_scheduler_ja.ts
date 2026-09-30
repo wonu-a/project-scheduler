@@ -4,48 +4,48 @@
 <context>
     <name>CalendarDialog</name>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="108"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="146"/>
         <source>OK</source>
         <translation>決定</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="110"/>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="111"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="148"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="149"/>
         <source>Project calendar</source>
         <translation>プロジェクトカレンダー</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="112"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="150"/>
         <source>Project start date</source>
         <translation>プロジェクト開始日</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="113"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="151"/>
         <source>Working days</source>
         <translation>稼働日</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="114"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="152"/>
         <source>Holidays</source>
         <translation>休日</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="115"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="153"/>
         <source>Add</source>
         <translation>追加</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="116"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="154"/>
         <source>Remove</source>
         <translation>削除</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="122"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="160"/>
         <source>No holidays yet. Pick a date above and add it.</source>
         <translation>休日はまだありません。上で日付を選んで追加してください。</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="174"/>
+        <location filename="../src/project_scheduler/ui/calendar_dialog.py" line="212"/>
         <source>Edit calendar</source>
         <translation>カレンダーを編集</translation>
     </message>
@@ -189,240 +189,240 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="335"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="339"/>
         <source>&amp;File</source>
         <translation>ファイル(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="336"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="340"/>
         <source>&amp;Edit</source>
         <translation>編集(&amp;E)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="337"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="341"/>
         <source>&amp;Project</source>
         <translation>プロジェクト(&amp;P)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="338"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="342"/>
         <source>&amp;View</source>
         <translation>表示(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="339"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="343"/>
         <source>Open &amp;recent</source>
         <translation>最近使ったファイル(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="340"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="344"/>
         <source>Load &amp;sample project</source>
         <translation>サンプルプロジェクトを読み込む(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="341"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="345"/>
         <source>&amp;Theme</source>
         <translation>テーマ(&amp;T)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="342"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="346"/>
         <source>&amp;Language</source>
         <translation>言語(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="344"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="348"/>
         <source>&amp;New project</source>
         <translation>新規プロジェクト(&amp;N)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="345"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="349"/>
         <source>&amp;Open…</source>
         <translation>開く(&amp;O)…</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="346"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="350"/>
         <source>&amp;Save</source>
         <translation>保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="347"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="351"/>
         <source>Save &amp;as…</source>
         <translation>名前を付けて保存(&amp;A)…</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="348"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="352"/>
         <source>&amp;Quit</source>
         <translation>終了(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="349"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="353"/>
         <source>&amp;Undo</source>
         <translation>元に戻す(&amp;U)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="350"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="354"/>
         <source>&amp;Redo</source>
         <translation>やり直し(&amp;R)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="351"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="355"/>
         <source>&amp;Add task…</source>
         <translation>タスクを追加(&amp;A)…</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="352"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="356"/>
         <source>&amp;Edit task…</source>
         <translation>タスクを編集(&amp;E)…</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="353"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="357"/>
         <source>&amp;Delete</source>
         <translation>削除(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="354"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="358"/>
         <source>&amp;Calendar…</source>
         <translation>カレンダー(&amp;C)…</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="356"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="360"/>
         <source>{0} tasks</source>
         <translation>{0} 件のタスク</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="357"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="361"/>
         <source>&amp;Light</source>
         <translation>ライト(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="358"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="362"/>
         <source>&amp;Dark</source>
         <translation>ダーク(&amp;D)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="359"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="363"/>
         <source>English</source>
         <translation>英語</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="359"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="363"/>
         <source>German</source>
         <translation>ドイツ語</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="359"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="363"/>
         <source>Japanese</source>
         <translation>日本語</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="363"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="367"/>
         <source>{0} ({1})</source>
         <translation>{0}（{1}）</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="364"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="368"/>
         <source>Toolbar</source>
         <translation>ツールバー</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="372"/>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="374"/>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="424"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="376"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="378"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="432"/>
         <source>Project Scheduler</source>
         <translation>プロジェクトスケジューラー</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="375"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="379"/>
         <source>Tasks</source>
         <translation>タスク</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="376"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="380"/>
         <source>Project finish</source>
         <translation>プロジェクト完了日</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="377"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="381"/>
         <source>Critical tasks</source>
         <translation>クリティカルタスク</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="378"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="382"/>
         <source>Filter tasks by name…</source>
         <translation>タスク名で絞り込み…</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="379"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="383"/>
         <source>Critical</source>
         <translation>クリティカル</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="380"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="384"/>
         <source>Zero slack: any delay moves the project finish.</source>
         <translation>余裕ゼロ: 少しでも遅れるとプロジェクトの完了が遅れます。</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="387"/>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="500"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="391"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="508"/>
         <source>Untitled</source>
         <translation>無題</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="391"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="395"/>
         <source>{0}[*] — Project Scheduler</source>
         <translation>{0}[*] — プロジェクトスケジューラー</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="399"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="403"/>
         <source>—</source>
         <translation>—</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="426"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="434"/>
         <source>OK</source>
         <translation>決定</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="448"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="456"/>
         <source>Unsaved changes</source>
         <translation>未保存の変更</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="449"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="457"/>
         <source>{0} has unsaved changes. Save them first?</source>
         <translation>{0} には未保存の変更があります。先に保存しますか?</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="465"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="473"/>
         <source>Loaded a sample project with {0} tasks.</source>
         <translation>{0} 件のタスクを含むサンプルプロジェクトを読み込みました。</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="473"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="481"/>
         <source>Open project</source>
         <translation>プロジェクトを開く</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="473"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="481"/>
         <source>Schedules (*.schedule.json);;All files (*)</source>
         <translation>スケジュール (*.schedule.json);;すべてのファイル (*)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="502"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="510"/>
         <source>Save project</source>
         <translation>プロジェクトを保存</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="502"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="510"/>
         <source>Schedules (*.schedule.json)</source>
         <translation>スケジュール (*.schedule.json)</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="521"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="529"/>
         <source>Saved {0}.</source>
         <translation>{0} を保存しました。</translation>
     </message>
     <message>
-        <location filename="../src/project_scheduler/ui/main_window.py" line="528"/>
+        <location filename="../src/project_scheduler/ui/main_window.py" line="536"/>
         <source>No recent files</source>
         <translation>最近使ったファイルはありません</translation>
     </message>

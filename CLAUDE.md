@@ -197,6 +197,5 @@ A command validates its change before it is pushed onto the undo stack. If valid
 ## Don'ts
 
 - Don't catch exceptions broadly to make tests pass. Fix the cause.
-- Don't commit the generated `resources_rc.py` or `*.qm` files.
 - Don't add dependencies beyond PySide6, pytest and pytest-qt without a clear reason stated in the PR or commit message.
 - Don't use `QTimer` sleeps or `processEvents` loops to hide ordering bugs.
