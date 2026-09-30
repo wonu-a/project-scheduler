@@ -1,0 +1,16 @@
+{
+  "format_version": 1,
+  "project": {
+    "start_date": "2026-01-02",
+    "calendar": {
+      "working_weekdays": [0, 1, 2, 3, 4],
+      "holidays": ["2026-01-06"]
+    },
+    "next_id": 4,
+    "tasks": [
+      {"id": 1, "name": "Design", "duration": 3, "predecessors": []},
+      {"id": 2, "name": "Build", "duration": 5, "predecessors": [1]},
+      {"id": 3, "name": "Launch", "duration": 0, "predecessors": [2]}
+    ]
+  }
+}

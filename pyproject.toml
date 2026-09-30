@@ -1,0 +1,30 @@
+[project]
+name = "project-scheduler"
+version = "0.1.0"
+description = "Desktop critical-path project scheduler built with PySide6"
+readme = "README.md"
+authors = [
+    { name = "Wonuola Abimbola", email = "woa0001@auburn.edu" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "pyside6>=6.11.2",
+]
+
+[project.scripts]
+project-scheduler = "project_scheduler:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-qt>=4.5.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+qt_api = "pyside6"
+faulthandler_timeout = 60  # dump a traceback instead of hanging on a stray modal dialog

@@ -1,0 +1,27 @@
+<!DOCTYPE RCC>
+<RCC version="1.0">
+    <qresource prefix="/">
+        <file>styles/dark.qss</file>
+        <file>styles/light.qss</file>
+        <file>icons/add.svg</file>
+        <file>icons/app.svg</file>
+        <file>icons/calendar.svg</file>
+        <file>icons/check.svg</file>
+        <file>icons/chevron-down.svg</file>
+        <file>icons/chevron-left.svg</file>
+        <file>icons/chevron-right.svg</file>
+        <file>icons/critical.svg</file>
+        <file>icons/delete.svg</file>
+        <file>icons/edit.svg</file>
+        <file>icons/new.svg</file>
+        <file>icons/open.svg</file>
+        <file>icons/redo.svg</file>
+        <file>icons/save.svg</file>
+        <file>icons/search.svg</file>
+        <file>icons/sort-down.svg</file>
+        <file>icons/sort-up.svg</file>
+        <file>icons/undo.svg</file>
+        <file>i18n/project_scheduler_de.qm</file>
+        <file>i18n/project_scheduler_ja.qm</file>
+    </qresource>
+</RCC>
